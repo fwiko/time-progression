@@ -1,8 +1,5 @@
 # Time Progression API
-
-### **Where do we stand?**
-
-#### This is a simple API allowing the retreival of percentage data about how far we are through different units of time. All respective data is returned in JSON format.
+#### A simple API allowing the retreival of percentage data about how far we are through different units of time. All respective data is returned in JSON format.
 
 ## Optional parameters
 
