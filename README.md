@@ -1,6 +1,22 @@
-# **Where do we stand?**
+# Time Progression API
 
-### A simple API allowing the retreival of percentage data about how far we are through different units of time. All respective data is returned in JSON format.
+### **Where do we stand?**
+
+#### This is a simple API allowing the retreival of percentage data about how far we are through different units of time. All respective data is returned in JSON format.
+
+## Optional parameters
+
+### `format`
+- ### `"round"`
+    - will round all returned values, using the traditional rounding method.
+- ### `"floor"`
+    - will round all returned values down, no matter the decimal value.
+- ### `"ceil"`
+    - will round all returned values up, no matter the decimal value.
+
+### `timezone`
+- ### e.g. `"America-Cancun"`
+    - All available timezones can be retreived by visiting `/timezones`
 
 
 ## Example Usage
@@ -27,16 +43,3 @@ curl http://localhost:5000/?timezone=US-Hawaii -H "Accept: application/json"
 ```
 ### *Percentage values are calculated using second precision.*
 
-## Optional parameters
-
-### `format`
-- ### `"round"`
-    - will round all returned values, using the traditional rounding method.
-- ### `"floor"`
-    - will round all returned values down, no matter the decimal value.
-- ### `"ceil"`
-    - will round all returned values up, no matter the decimal value.
-
-### `timezone`
-- ### e.g. `"America-Cancun"`
-    - All available timezones can be retreived by visiting `/timezones`
