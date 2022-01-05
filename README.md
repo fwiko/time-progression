@@ -1,7 +1,7 @@
 # **Where do we stand?**
 
-## A simple API allowing the retreival of percentage data about how far we are through different units of time. All respective data is returned in JSON format.
-### Percentage values are calculated using second precision.
+### A simple API allowing the retreival of percentage data about how far we are through different units of time. All respective data is returned in JSON format.
+
 
 ## Example Usage
 
@@ -25,7 +25,7 @@ curl http://localhost:5000/?timezone=US-Hawaii -H "Accept: application/json"
     "timezone":"US/Hawaii"
 }
 ```
-
+### *Percentage values are calculated using second precision.*
 
 ## Optional parameters
 
