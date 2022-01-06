@@ -1,6 +1,8 @@
 # Time Progression API
 #### A simple API allowing the retreival of percentage data about how far we are through different units of time. All respective data is returned in JSON format.
 
+http://time.raffsimms.com/
+
 ## Optional parameters
 
 `format`
