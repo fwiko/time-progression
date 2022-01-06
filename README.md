@@ -27,15 +27,15 @@ curl http://localhost:5000/?timezone=US-Hawaii -H "Accept: application/json"
 ```json
 {
     "data":{
-        "day":56.52314814814815,
-        "hour":56.55555555555556,
-        "minute":93.33333333333333,
-        "month":17.9523596176822,
-        "week":36.646164021164026,
-        "year":1.5247209538305428
+        "day": 56.52314814814815,
+        "hour": 56.55555555555556,
+        "minute": 93.33333333333333,
+        "month": 17.9523596176822,
+        "week": 36.646164021164026,
+        "year": 1.5247209538305428
     },
-    "datestring":"2022-01-05 13:33:56",
-    "timezone":"US/Hawaii"
+    "datestring": "2022-01-05 13:33:56",
+    "timezone": "US/Hawaii"
 }
 ```
 ### *Percentage values are calculated using second precision.*
