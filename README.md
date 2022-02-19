@@ -5,17 +5,17 @@ http://time.raffsimms.com/
 
 ## Optional parameters
 
-`format`
-- `"round"`
+### format
+- **`round`**
     - will round all returned values, using the traditional rounding method.
-- `"floor"`
+- **`floor`**
     - will round all returned values down, no matter the decimal value.
-- `"ceil"`
+- **`ceil`**
     - will round all returned values up, no matter the decimal value.
 
- `timezone`
-- e.g. `"America-Cancun"`
-    - All available timezones can be retreived by visiting `/timezones`
+ ### timezone 
+- e.g. **`/?timezone=Australia-Tasmania`**
+    - A list of all available timezones can be viewed at **/timezones**
 
 
 ## Example Usage
