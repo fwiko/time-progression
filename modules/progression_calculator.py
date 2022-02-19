@@ -143,7 +143,7 @@ class ProgressionCalculator:
         """
         return list(map(lambda x: x.replace("/", "-"), pytz.all_timezones))
 
-    def _datestring(self) -> str:
+    def _timestamp(self) -> str:
         """Return a string representation of the date.".
 
         Returns:
@@ -163,7 +163,7 @@ class ProgressionCalculator:
         return CalcData(
             **{
                 "timezone": self.timezone,
-                "datestring": self._datestring(),
+                "timestamp": self._timestamp(),
                 "data": data,
             }
         )
