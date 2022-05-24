@@ -1,6 +1,5 @@
 {
     "HostAddress": "127.0.0.1",
     "HostPort": 8080,
-    "DefaultTimezone": "UTC",
-    "Environment": "release"
+    "DefaultTimezone": "UTC"
 }

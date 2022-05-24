@@ -11,14 +11,13 @@ import (
 	"github.com/labstack/echo/v4/middleware"
 )
 
-type settings struct {
+type config struct {
 	HostAddress     string
 	HostPort        int
 	DefaultTimezone string
-	DefaultFormat   string
 }
 
-var config settings
+var cfg config
 
 func init() {
 	file, err := os.Open("config.json")
@@ -28,7 +27,7 @@ func init() {
 	}
 
 	decoder := json.NewDecoder(file)
-	if err = decoder.Decode(&config); err != nil {
+	if err = decoder.Decode(&cfg); err != nil {
 		fmt.Println("Error decoding config file:", err)
 		os.Exit(1)
 	}
@@ -46,7 +45,7 @@ func main() {
 	e.GET("/api/:format", func(ctx echo.Context) error {
 		timezone := ctx.QueryParam("timezone")
 		if timezone == "" {
-			timezone = config.DefaultTimezone
+			timezone = cfg.DefaultTimezone
 		}
 
 		format := ctx.Param("format")
@@ -57,7 +56,7 @@ func main() {
 		return ctx.JSONPretty(http.StatusOK, result, "  ")
 	})
 
-	if err := e.Start(fmt.Sprintf("%s:%d", config.HostAddress, config.HostPort)); err != nil {
+	if err := e.Start(fmt.Sprintf("%s:%d", cfg.HostAddress, cfg.HostPort)); err != nil {
 		fmt.Println("Error starting server:", err)
 	}
 }
