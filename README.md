@@ -1,44 +1,48 @@
 # Time Progression API
-#### A simple API allowing the retreival of percentage data about how far we are through different units of time. All respective data is returned in JSON format.
 
-http://time.raffsimms.com/
+https://progression.didntlaugh.com/
 
-## Optional parameters
+# Usage
 
-### format
-- **`round`**
-    - will round all returned values, using the traditional rounding method.
-- **`floor`**
-    - will round all returned values down, no matter the decimal value.
-- **`ceil`**
-    - will round all returned values up, no matter the decimal value.
+### Request
 
- ### timezone 
-- e.g. **`/?timezone=Australia-Tasmania`**
-    - A list of all available timezones can be viewed at **/timezones**
-
-
-## Example Usage
-
-#### Request
-```console
-curl http://localhost:5000/?timezone=US-Hawaii -H "Accept: application/json"
+```bash
+curl http://localhost:8080/?timezone=US-Hawaii -H "Accept: application/json"
 ```
 
-#### Response
+### Response
+
 ```json
 {
-    "data":{
-        "day": 56.52314814814815,
-        "hour": 56.55555555555556,
-        "minute": 93.33333333333333,
-        "month": 17.9523596176822,
-        "week": 36.646164021164026,
-        "year": 1.5247209538305428
-    },
-    "datestring": "2022-01-05 13:33:56",
-    "timezone": "US/Hawaii"
+  "timezone": "US/Hawaii",
+  "timestamp": "Tue, 24 May 2022 03:01:10 HST",
+  "result": {
+    "year": 39.4865233384069,
+    "month": 2412.5810185185182,
+    "week": 1.8052248677248677,
+    "day": 12.581018518518519,
+    "hour": 1.9444444444444444,
+    "minute": 16.666666666666664
+  }
 }
 ```
-### *Percentage values are calculated using second precision.*
 
+_All values are calculated to the second._
+
+# Containerisation with Docker
+
+This will use the included Dockerfile to create an install dependencies and build the application.
+
+### Build Image
+
+```bash
+docker build -t time-progression .
+```
+
+### Start Container
+
+```bash
+docker run -d -p 80:80 \
+-v $(pwd)/config.json:/usr/src/app/config.json \
+--name time-progression time-progression:latest
+```

@@ -1,9 +1,14 @@
-FROM python:3.9-alpine
-WORKDIR /usr/src/app
+FROM golang:1.18-alpine
 
-COPY requirements.txt ./
-RUN pip install --no-cache-dir -r requirements.txt
+workdir /usr/src/app
 
-COPY . .
+copy go.mod .
+copy go.sum .
+RUN go mod download
 
-CMD ["python", "-u", "main.py"]
+copy . .
+RUN go build -o ./time-progression
+
+EXPOSE 80
+
+CMD ["./time-progression"]
