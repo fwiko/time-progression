@@ -1,33 +1,44 @@
 # Time Progression API
 
-https://progression.didntlaugh.com/
+# Options
+
+### **Format**
+
+The format in which data is returned can be specified with a path parameter.
+
+- `second` - returns the values as seconds
+- `percentage` - returns the values as a percentage using second precision
+
+### **TimeZone**
+
+The `timezone` query parameter can be used to specify the timezone in which the data is calculated/returned.
+
+e.g. `?timezone=Asia/Singapore` will return the data in New York time.
 
 # Usage
 
-### Request
+### **Request**
 
 ```bash
-curl http://localhost:8080/?timezone=US-Hawaii -H "Accept: application/json"
+curl http://localhost:8080/api/percentage?timezone=Asia/Singapore -H "Accept: application/json"
 ```
 
-### Response
+### **Response**
 
 ```json
 {
-  "timezone": "US/Hawaii",
-  "timestamp": "Tue, 24 May 2022 03:01:10 HST",
+  "timezone": "Asia/Singapore",
+  "timestamp": "Wed, 25 May 2022 02:53:23 +08",
   "result": {
-    "year": 39.4865233384069,
-    "month": 2412.5810185185182,
-    "week": 1.8052248677248677,
-    "day": 12.581018518518519,
-    "hour": 1.9444444444444444,
-    "minute": 16.666666666666664
+    "year": 39.75901509386098,
+    "month": 83.73468364197531,
+    "week": 30.291501322751323,
+    "day": 12.04050925925926,
+    "hour": 88.97222222222221,
+    "minute": 38.333333333333336
   }
 }
 ```
-
-_All values are calculated to the second._
 
 # Containerisation with Docker
 

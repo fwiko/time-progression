@@ -48,7 +48,44 @@ func realWeekday(now time.Time) int {
 	}
 }
 
-func Query(timezone string) (query, error) {
+func seconds(t time.Time) values {
+	minuteSeconds := float64(t.Second())
+	hourSeconds := float64(t.Minute()*60) + minuteSeconds
+	daySeconds := float64(t.Hour()*SECONDS_IN_HOUR) + hourSeconds
+
+	return values{
+		Year:   float64(t.YearDay()*SECONDS_IN_DAY) + daySeconds,
+		Month:  float64(t.Day()*SECONDS_IN_DAY) + daySeconds,
+		Week:   float64((realWeekday(t)-1)*SECONDS_IN_DAY) + daySeconds,
+		Day:    daySeconds,
+		Hour:   hourSeconds,
+		Minute: minuteSeconds,
+	}
+}
+
+func percentages(t time.Time) values {
+	v := seconds(t)
+
+	var daysInYear float64
+	if isLeapYear(t.Year()) {
+		daysInYear = 366
+	} else {
+		daysInYear = 365
+	}
+
+	daysInMonth := daysInMonth(t.Year(), t.Month())
+
+	v.Year = v.Year / (daysInYear * float64(SECONDS_IN_DAY)) * 100
+	v.Month = v.Month / (daysInMonth * float64(SECONDS_IN_DAY)) * 100
+	v.Week = v.Week / (168 * float64(SECONDS_IN_HOUR)) * 100
+	v.Day = v.Day / float64(SECONDS_IN_DAY) * 100
+	v.Hour = v.Hour / float64(SECONDS_IN_HOUR) * 100
+	v.Minute = v.Minute / 60 * 100
+
+	return v
+}
+
+func Query(format string, timezone string) (query, error) {
 	location, err := time.LoadLocation(timezone)
 	if err != nil {
 		return query{}, errors.New("Invalid timezone")
@@ -56,32 +93,19 @@ func Query(timezone string) (query, error) {
 
 	now := time.Now().In(location)
 
-	minuteSeconds := float64(now.Second())
-	hourSeconds := float64(now.Minute()*60) + minuteSeconds
-	daySeconds := float64(now.Hour()*SECONDS_IN_HOUR) + hourSeconds
-	weekSeconds := float64((realWeekday(now)-1)*SECONDS_IN_DAY) + daySeconds
-	monthSeconds := float64(now.Day()*SECONDS_IN_DAY) + daySeconds
-	yearSeconds := float64(now.YearDay()*SECONDS_IN_DAY) + daySeconds
+	var result values
 
-	var daysInYear float64
-	if isLeapYear(now.Year()) {
-		daysInYear = 366
+	if format == "second" {
+		result = seconds(now)
+	} else if format == "percentage" {
+		result = percentages(now)
 	} else {
-		daysInYear = 365
+		return query{}, errors.New("Invalid format")
 	}
-
-	daysInMonth := daysInMonth(now.Year(), now.Month())
 
 	return query{
 		Timezone:  timezone,
 		Timestamp: now.Format(time.RFC1123),
-		Result: values{
-			Year:   yearSeconds / (daysInYear * float64(SECONDS_IN_DAY)) * 100,
-			Month:  monthSeconds / (daysInMonth * float64(SECONDS_IN_DAY)) * 100,
-			Week:   weekSeconds / (168 * float64(SECONDS_IN_HOUR)) * 100,
-			Day:    daySeconds / float64(SECONDS_IN_DAY) * 100,
-			Hour:   hourSeconds / float64(SECONDS_IN_HOUR) * 100,
-			Minute: minuteSeconds / 60 * 100,
-		},
+		Result:    result,
 	}, nil
 }

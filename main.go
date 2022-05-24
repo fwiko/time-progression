@@ -15,7 +15,7 @@ type settings struct {
 	HostAddress     string
 	HostPort        int
 	DefaultTimezone string
-	Environment     string
+	DefaultFormat   string
 }
 
 var config settings
@@ -43,12 +43,14 @@ func main() {
 		CustomTimeFormat: "2006-01-02 15:04:05",
 	}))
 
-	e.GET("/", func(ctx echo.Context) error {
+	e.GET("/api/:format", func(ctx echo.Context) error {
 		timezone := ctx.QueryParam("timezone")
 		if timezone == "" {
 			timezone = config.DefaultTimezone
 		}
-		result, err := progress.Query(timezone)
+
+		format := ctx.Param("format")
+		result, err := progress.Query(format, timezone)
 		if err != nil {
 			return ctx.JSON(http.StatusBadRequest, map[string]interface{}{"error": err.Error()})
 		}
