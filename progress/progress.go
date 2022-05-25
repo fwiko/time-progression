@@ -88,7 +88,7 @@ func percentages(t time.Time) values {
 func Query(format string, timezone string) (query, error) {
 	location, err := time.LoadLocation(timezone)
 	if err != nil {
-		return query{}, errors.New("Invalid timezone")
+		return query{}, errors.New("invalid timezone")
 	}
 
 	now := time.Now().In(location)
@@ -100,7 +100,7 @@ func Query(format string, timezone string) (query, error) {
 	} else if format == "percentage" {
 		result = percentages(now)
 	} else {
-		return query{}, errors.New("Invalid format")
+		return query{}, errors.New("invalid format")
 	}
 
 	return query{
