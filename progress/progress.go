@@ -20,7 +20,7 @@ type query struct {
 	Result    values `json:"result"`
 }
 
-var (
+const (
 	SECONDS_IN_DAY  = 86400
 	SECONDS_IN_HOUR = 3600
 	HOURS_IN_WEEK   = 168
