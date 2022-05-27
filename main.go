@@ -3,12 +3,11 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"net/http"
 	"os"
 	"time-progression/progress"
 
-	"github.com/labstack/echo/v4"
-	"github.com/labstack/echo/v4/middleware"
+	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/logger"
 )
 
 type config struct {
@@ -34,29 +33,28 @@ func init() {
 }
 
 func main() {
-	e := echo.New()
-	e.HideBanner = true
+	app := fiber.New()
 
-	e.Use(middleware.LoggerWithConfig(middleware.LoggerConfig{
-		Format:           `[${time_custom}] ${remote_ip} | ${method} ${path} ${status} | ${latency_human}` + "\n",
-		CustomTimeFormat: "2006-01-02 15:04:05",
+	app.Use(logger.New(logger.Config{
+		Format:     "[${time}] ${ip} - ${status} ${method} ${path} \n",
+		TimeFormat: "2006-01-02 15:04:05",
 	}))
 
-	e.GET("/api/:format", func(ctx echo.Context) error {
-		timezone := ctx.QueryParam("timezone")
+	app.Get("/api/:format", func(ctx *fiber.Ctx) error {
+		timezone := ctx.Query("timezone")
 		if timezone == "" {
 			timezone = cfg.DefaultTimezone
 		}
 
-		format := ctx.Param("format")
+		format := ctx.Params("format")
 		result, err := progress.Query(format, timezone)
 		if err != nil {
-			return ctx.JSON(http.StatusBadRequest, map[string]interface{}{"error": err.Error()})
+			return ctx.JSON(fiber.Map{"error": err.Error()})
 		}
-		return ctx.JSONPretty(http.StatusOK, result, "  ")
+		return ctx.JSON(result)
 	})
 
-	if err := e.Start(fmt.Sprintf("%s:%d", cfg.HostAddress, cfg.HostPort)); err != nil {
+	if err := app.Listen(fmt.Sprintf("%s:%d", cfg.HostAddress, cfg.HostPort)); err != nil {
 		fmt.Println("Error starting server:", err)
 	}
 }

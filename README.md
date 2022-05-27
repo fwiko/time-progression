@@ -7,7 +7,7 @@
 The format in which data is returned can be specified with a path parameter.
 
 - `second` - returns the values as seconds
-- `percentage` - returns the values as a percentage using second precision
+- `percent` - returns the values as a percentage using second precision
 
 ### **TimeZone**
 
@@ -20,7 +20,7 @@ e.g. `?timezone=Asia/Singapore` will return the data in New York time.
 ### **Request**
 
 ```bash
-curl http://localhost:8080/api/percentage?timezone=Asia/Singapore -H "Accept: application/json"
+curl http://localhost:8080/api/percent?timezone=Asia/Singapore -H "Accept: application/json"
 ```
 
 ### **Response**

@@ -97,7 +97,7 @@ func Query(format string, timezone string) (query, error) {
 
 	if format == "second" {
 		result = seconds(now)
-	} else if format == "percentage" {
+	} else if format == "percent" {
 		result = percentages(now)
 	} else {
 		return query{}, errors.New("invalid format")
