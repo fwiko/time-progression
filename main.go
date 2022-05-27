@@ -33,7 +33,9 @@ func init() {
 }
 
 func main() {
-	app := fiber.New()
+	app := fiber.New(fiber.Config{
+		ProxyHeader: "X-Forwarded-For",
+	})
 
 	app.Use(logger.New(logger.Config{
 		Format:     "[${time}] ${ip} - ${status} ${method} ${path} \n",
@@ -49,9 +51,9 @@ func main() {
 		format := ctx.Params("format")
 		result, err := progress.Query(format, timezone)
 		if err != nil {
-			return ctx.JSON(fiber.Map{"error": err.Error()})
+			return ctx.Status(400).JSON(fiber.Map{"error": err.Error()})
 		}
-		return ctx.JSON(result)
+		return ctx.Status(200).JSON(result)
 	})
 
 	if err := app.Listen(fmt.Sprintf("%s:%d", cfg.HostAddress, cfg.HostPort)); err != nil {
