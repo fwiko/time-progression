@@ -2,8 +2,7 @@ FROM golang:1.18-alpine
 
 workdir /usr/src/app
 
-copy go.mod .
-copy go.sum .
+COPY go.* .
 RUN go mod download
 
 copy . .
