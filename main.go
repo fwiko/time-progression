@@ -42,7 +42,7 @@ func main() {
 		TimeFormat: "2006-01-02 15:04:05",
 	}))
 
-	app.Get("/api/:format", func(ctx *fiber.Ctx) error {
+	app.Get("/api/v1/:format", func(ctx *fiber.Ctx) error {
 		timezone := ctx.Query("timezone")
 		if timezone == "" {
 			timezone = cfg.DefaultTimezone
@@ -54,6 +54,10 @@ func main() {
 			return ctx.Status(400).JSON(fiber.Map{"error": err.Error()})
 		}
 		return ctx.Status(200).JSON(result)
+	})
+
+	app.Get("*", func(ctx *fiber.Ctx) error {
+		return ctx.Status(404).JSON(fiber.Map{"error": "Endpoint not found"})
 	})
 
 	if err := app.Listen(fmt.Sprintf("%s:%d", cfg.HostAddress, cfg.HostPort)); err != nil {

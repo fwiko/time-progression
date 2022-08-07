@@ -1,5 +1,7 @@
 # Time Progression API
 
+Base URL `/api/v1/:endpoint`
+
 # Options
 
 ### **Format**
@@ -20,7 +22,7 @@ e.g. `?timezone=Asia/Singapore` will return the data in New York time.
 ### **Request**
 
 ```bash
-curl http://localhost:8080/api/percent?timezone=Asia/Singapore -H "Accept: application/json"
+curl http://localhost:8080/api/v1/percent?timezone=Asia/Singapore -H "Accept: application/json"
 ```
 
 ### **Response**
