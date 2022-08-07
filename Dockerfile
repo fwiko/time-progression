@@ -2,10 +2,10 @@ FROM golang:1.18-alpine
 
 WORKDIR /usr/src/app
 
-COPY go.* .
+COPY go.* ./
 RUN go mod download
 
-COPY . .
+COPY . ./
 RUN go build -o ./time-progression
 
 EXPOSE 80
