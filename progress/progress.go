@@ -35,7 +35,7 @@ func isLeapYear(year int) bool {
 }
 
 func daysInMonth(year int, month time.Month) float64 {
-	t := time.Date(year, month, 0, 0, 0, 0, 0, time.UTC)
+	t := time.Date(year, month+1, 0, 0, 0, 0, 0, time.UTC)
 	return float64(t.AddDate(0, 1, 0).Day())
 }
 
