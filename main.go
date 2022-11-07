@@ -42,7 +42,7 @@ func main() {
 		TimeFormat: "2006-01-02 15:04:05",
 	}))
 
-	app.Get("/api/v1/:format", func(ctx *fiber.Ctx) error {
+	app.Get("/api/:format", func(ctx *fiber.Ctx) error {
 		timezone := ctx.Query("timezone")
 		if timezone == "" {
 			timezone = cfg.DefaultTimezone
