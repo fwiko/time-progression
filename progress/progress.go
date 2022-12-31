@@ -53,8 +53,8 @@ func seconds(t time.Time) Values {
 	daySeconds := float64(t.Hour()*SecondsInHour) + hourSeconds
 
 	return Values{
-		Year:   float64(t.YearDay()*SecondsInDay) + daySeconds,
-		Month:  float64(t.Day()*SecondsInDay) + daySeconds,
+		Year:   float64((t.YearDay()-1)*SecondsInDay) + daySeconds,
+		Month:  float64((t.Day()-1)*SecondsInDay) + daySeconds,
 		Week:   float64((realWeekday(t)-1)*SecondsInDay) + daySeconds,
 		Day:    daySeconds,
 		Hour:   hourSeconds,
