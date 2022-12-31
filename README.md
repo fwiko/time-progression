@@ -15,7 +15,7 @@ The format in which data is returned can be specified with a path parameter.
 
 The `timezone` query parameter can be used to specify the timezone in which the data is calculated/returned.
 
-e.g. `?timezone=Asia/Singapore` will return the data in New York time.
+e.g. `?timezone=Asia/Singapore` will return the data in Singapore time.
 
 # Usage
 
