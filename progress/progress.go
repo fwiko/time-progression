@@ -34,9 +34,8 @@ func isLeapYear(year int) bool {
 	return false
 }
 
-func daysInMonth(year int, month time.Month) float64 {
-	t := time.Date(year, month+1, 0, 0, 0, 0, 0, time.UTC)
-	return float64(t.AddDate(0, 1, 0).Day())
+func daysInMonth(year int, month time.Month) int {
+	return time.Date(year, month+1, 0, 0, 0, 0, 0, time.UTC).Day()
 }
 
 func realWeekday(now time.Time) int {
@@ -75,7 +74,7 @@ func percentages(t time.Time) Values {
 	daysInMonth := daysInMonth(t.Year(), t.Month())
 
 	v.Year = v.Year / (daysInYear * float64(SecondsInDay)) * 100
-	v.Month = v.Month / (daysInMonth * float64(SecondsInDay)) * 100
+	v.Month = v.Month / (float64(daysInMonth * SecondsInDay)) * 100
 	v.Week = v.Week / (168 * float64(SecondsInHour)) * 100
 	v.Day = v.Day / float64(SecondsInDay) * 100
 	v.Hour = v.Hour / float64(SecondsInHour) * 100
